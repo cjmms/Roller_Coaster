@@ -8,28 +8,28 @@
 #include <GL/glut.h>
 #endif
 
+const float BOX_SIZE = 7.0f;
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glLoadIdentity();  // reset the current matrix to identity matrix
 
-	float eye[] = { 0, 0, 8 };
-	float center[] = { 0, 0, 0 };
-	// create a viewing matrix defined by an eye point and a reference point
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	// glMatrixMode(GL_MODELVIEW);
+	// glLoadIdentity();
+	
+	GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
+	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
+	
+	GLfloat lightColor[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat lightPos[] = {-2 * BOX_SIZE, BOX_SIZE, 4 * BOX_SIZE, 1.0f};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
+	glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
 
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_LIGHTING);
-	GLfloat white[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat light_pos[] = { 5, 5, 5, 1 };
-
-	glLightfv(GL_LIGHT0, GL_POSITION, light_pos);  // define the position of the light
-	glLightfv(GL_LIGHT0, GL_AMBIENT, white);  // specify the ambient RGBA intensity of the light
-	glEnable(GL_LIGHT0);
-
-	glutSolidTeapot(.5);  // draw the teapot
+	glutSolidTeapot(0.5);  // draw the teapot
 
 	glutSwapBuffers();
+}
 
+void init() {
 	glViewport(0, 0, 480, 480);  // define a viewport and display in this viewport
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -39,6 +39,14 @@ void draw() {
 	gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);  // define a viewing matrix
 }
 
+void init_lighting() {
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_LIGHTING);
+	glEnable(GL_NORMALIZE);
+	glEnable(GL_COLOR_MATERIAL);
+	glEnable(GL_LIGHT0);
+}
+
 int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);  // initialize the library
@@ -46,6 +54,9 @@ int main(int argc, char *argv[])
 	glutInitWindowSize(480, 480);  // define size of the window
 	glutInitWindowPosition(0, 0);  // define position of the window
 	glutCreateWindow("Hello teapot");
+
+	init();
+	init_lighting();
 
 	glutDisplayFunc(draw);  // display callback
 	glutMainLoop();  // enter event processing loop
