@@ -9,5 +9,8 @@
 #endif
 
 
+#define segLength -5
+
+
 
 void levelSection(int);
