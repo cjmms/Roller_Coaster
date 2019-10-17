@@ -2,7 +2,7 @@ CC = g++
 CFLAGS = -Wall
 PROG = roller_coaster
 
-SRCS = roller_coaster.cpp
+SRCS = roller_coaster.cpp tracks.cpp
 
 ifeq ($(shell uname),Darwin)
 	LIBS = -framework OpenGL -framework GLUT
