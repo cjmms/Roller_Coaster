@@ -8,18 +8,54 @@
 #include <GL/glut.h>
 #endif
 
-const float BOX_SIZE = 7.0f;
+// x axis is red, y axis is green, z axis is blue
+void drawThreeAxises () {
+    double length = 1.5f;
+    glBegin(GL_LINES);
+    glColor3f(1.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(length, 0.0, 0.0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0.0, 1.0, 0.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, length, 0.0);
+    glEnd();
+
+    glBegin(GL_LINES);
+    glColor3f(0.0, 0.0, 1.0);
+    glVertex3f(0.0, 0.0, 0.0);
+    glVertex3f(0.0, 0.0, length);
+    glEnd();
+}
 
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	0.0, 0.0, 5.0, 
+	gluLookAt(	0.0, 1.0, 5.0, 
 				0.0, 0.0, 0.0, 
 				0.0, 1.0, 0.0);
 	
+	glBegin(GL_LINES);
+	glColor3f(1.0, 0.0, 0.0); // Red
+	glVertex3f(-2.5, 0, 0);
+	glColor3f(0.0, 1.0, 0.0); // Green
+	glVertex3f(-2.5, 0, -5);
 
-	glutSolidTeapot(1);  // draw the teapot
+	glColor3f(1.0, 0.0, 0.0); // Red
+	glVertex3f(2.5, 0, 0);
+	glColor3f(0.0, 1.0, 0.0); // Green
+	glVertex3f(2.5, 0, -5);
+
+	// glVertex2f(10, 120);
+	// glVertex2f(120, 10);
+	glEnd();
+
+	drawThreeAxises();
+
+	//glutSolidTeapot(1);  // draw the teapot
 
 	glutSwapBuffers();
 }
