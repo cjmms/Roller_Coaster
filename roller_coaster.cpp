@@ -37,8 +37,8 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	7.0, 3.0, -500.0, 
-				0.0, 0.0, -500.0, 
+	gluLookAt(	37.0, 16.0, -510.0, 
+				0.0, 0.0, -510.0, 
 				0.0, 1.0, 0.0);
 
 	drawThreeAxises();

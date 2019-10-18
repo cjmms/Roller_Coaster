@@ -52,6 +52,22 @@ Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {
     return p;
 }
 
+bool areSame(double a, double b)
+{
+    double eps = 0.001;
+    return fabs(a - b) < eps;
+}
+
+void addLevelLineForCurve(Point p, double t) {
+    for (double i = 0.2; i < 1; i += 0.1) {
+        if (areSame(i, t)) {
+            Point opposite;
+            opposite.set(-1 * p.x, p.y, p.z);
+            setline(p, opposite);
+        }
+    }
+}
+
 
 
 void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
@@ -62,11 +78,7 @@ void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
     {
         Point P = setBezier(start, ctl_1, ctl_2, end, t);
         setline(p_current, P);  // draw small cruve segment
-        if ((int)(t * 100) % 10 == 0 && t != 1 && t != 0) {
-            Point opposite;
-            opposite.set(-1 * p_current.x, p_current.y, p_current.z);
-            setline(p_current, opposite);
-        }
+        addLevelLineForCurve(p_current, t);
         p_current = P;
     }
 }
@@ -79,18 +91,29 @@ void upturn(double y, double z, double degree) {
 }
 
 
+Point findEndPoint(Point start, double degree, double length) {
+    Point end;
+    end.x = start.x;
+    end.y = sin(degree * M_PI / 180.0) * length;
+    end.z = cos(degree * M_PI / 180.0) * length;
+    return end;
+}
+
+
 void downturn(double x, double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
-    ctl1.set(x, 0, -1.5);
-	ctl2.set(x, -0.5, -3.5);
+
     start.set(x, y, z);
-    end.set(x, -2, -4);
+    end = findEndPoint(start, 30, 10 * segLength);
+    ctl1.set(x, end.y / 4 + 6, end.z / 4);
+    ctl2.set(x, end.y * 0.75 + 5, end.z * 0.75);
     drawCruve(start, end, ctl1, ctl2);
 
-    ctl1.set(-x, 0, -1.5);
-	ctl2.set(-x, -0.5, -3.5);
-    start.set(-x, y, z);
-    end.set(-x, -2, -4);
+    // draw another curve
+    ctl1.x *= -1;
+    ctl2.x *= -1;
+    start.x *= -1;
+    end.x *= -1;
     drawCruve(start, end, ctl1, ctl2);
 }
 

@@ -10,7 +10,6 @@
 
 #include <math.h>
 #include <stdio.h>
-//#include <cmath>
 
 
 #define segLength -5
@@ -43,4 +42,12 @@ void downturn(double x, double y, double z, double degree);
 
 void upturn(double y, double z, double degree);
 
+// calculate the ending point of a curve base on the degree of the slope and starting point
+Point findEndPoint(Point start, double degree, double length);
+
+// draw the Roller Coaster tracks
 void drawTracks();
+
+void addLevelLineForCurve(Point p, double t);
+
+bool areSame(double a, double b);
