@@ -12,7 +12,7 @@
 #include <stdio.h>
 
 
-#define segLength -5
+#define segLength 5
 
 
 class Point{
@@ -25,8 +25,9 @@ public:
     }
 };
 
+
 // draw a level line segment
-void levelSection(int length);
+void levelSection(int length, double degree);
 
 // draw a segment between p1 and p2
 void setline(Point p1, Point p2);
@@ -48,6 +49,9 @@ Point findEndPoint(Point start, double degree, double length);
 // draw the Roller Coaster tracks
 void drawTracks();
 
+// point p is one end of the level line, t is linear interpolation of the curve
 void addLevelLineForCurve(Point p, double t);
 
+
+// compare two double values
 bool areSame(double a, double b);

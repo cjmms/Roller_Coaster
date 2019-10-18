@@ -1,30 +1,30 @@
 #include "tracks.h"
 
 
-void levelSection(int length) {
+void levelSection(int length, double degree) {
     glColor3f(1.0, 0.0, 0.0); // Red
 
     glBegin(GL_LINES);
     // starting horizontal line
     glVertex3f(segLength / 2, 0, 0); 
-    glVertex3f(segLength / 2 * -1, 0, 0);
+    glVertex3f(-segLength / 2, 0, 0);
 
     // ending horizontal line
-    glVertex3f(segLength / 2, 0, length * segLength); 
-    glVertex3f(segLength / 2 * -1, 0, length * segLength);
+    glVertex3f(segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength); 
+    glVertex3f(-segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
 
     // left track
 	glVertex3f(segLength / 2, 0, 0);
-	glVertex3f(segLength / 2, 0, length * segLength);
+	glVertex3f(segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
 
     // right track
-	glVertex3f(segLength / 2 * -1, 0, 0);
-	glVertex3f(segLength / 2 * -1, 0, length * segLength);
+	glVertex3f(-segLength / 2, 0, 0);
+	glVertex3f(-segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
 
     // draw (length - 1) horizontal lines
     for (int i = 1; i < length; i++) {
-        glVertex3f(segLength / 2, 0, i * segLength); 
-        glVertex3f(segLength / 2 * -1, 0, i * segLength);
+        glVertex3f(segLength / 2, sin(degree * M_PI / 180.0) * i * segLength, i * -segLength); 
+        glVertex3f(-segLength / 2, sin(degree * M_PI / 180.0) * i * segLength, i * -segLength);
     }
 
 	glEnd();
@@ -83,6 +83,7 @@ void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
     }
 }
 
+
 void upturn(double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
     // ctl1.setxy(2, -2);
@@ -95,7 +96,7 @@ Point findEndPoint(Point start, double degree, double length) {
     Point end;
     end.x = start.x;
     end.y = sin(degree * M_PI / 180.0) * length;
-    end.z = cos(degree * M_PI / 180.0) * length;
+    end.z = cos(degree * M_PI / 180.0) * -length;
     return end;
 }
 
@@ -104,9 +105,9 @@ void downturn(double x, double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
 
     start.set(x, y, z);
-    end = findEndPoint(start, 30, 10 * segLength);
-    ctl1.set(x, end.y / 4 + 6, end.z / 4);
-    ctl2.set(x, end.y * 0.75 + 5, end.z * 0.75);
+    end = findEndPoint(start, degree, 10 * segLength);
+    ctl1.set(x, end.y / 4 + 5, end.z / 5 );
+    ctl2.set(x, end.y * 0.75 + 2, end.z * 0.75);
     drawCruve(start, end, ctl1, ctl2);
 
     // draw another curve
@@ -120,8 +121,12 @@ void downturn(double x, double y, double z, double degree) {
 
 
 void drawTracks() {
-    levelSection(100);
-    glTranslated(0, 0, segLength * 100);
-    downturn(segLength / 2, 0, 0, 30);
+    levelSection(100, 0);
 
+    glTranslated(0, 0, -segLength * 100);
+    downturn(segLength / 2, 0, 0, -30);
+
+    // hardcode as -30 degree
+    glTranslated(0, sin(-30 * M_PI / 180.0) * 10 * segLength + 1.3, cos(-30 * M_PI / 180.0) * 10 * -segLength + 1.8);
+    levelSection(100, -30);
 }
