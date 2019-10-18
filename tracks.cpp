@@ -33,11 +33,10 @@ void levelSection(int length) {
 
 void setline(Point p1, Point p2) {
     glBegin(GL_LINES);
-    glVertex3f(segLength / 2, p1.y, -p1.x);
-    glVertex3f(segLength / 2, p2.y, -p2.x);
 
-    glVertex3f(-segLength / 2, p1.y, -p1.x);
-    glVertex3f(-segLength / 2, p2.y, -p2.x);
+    glVertex3f(p1.x, p1.y, p1.z);
+    glVertex3f(p2.x, p2.y, p2.z);
+
     glEnd();
 }
 
@@ -49,6 +48,7 @@ Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {
     double a4 = t*t*t;
     p.x = a1*p1.x + a2*p2.x + a3*p3.x + a4*p4.x;
     p.y = a1*p1.y + a2*p2.y + a3*p3.y + a4*p4.y;
+    p.z = a1*p1.z + a2*p2.z + a3*p3.z + a4*p4.z;
     return p;
 }
 
@@ -66,17 +66,23 @@ void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
 
 void upturn(double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
-    ctl1.setxy(2, -2);
-	ctl2.setxy(4, 1);
+    // ctl1.setxy(2, -2);
+	// ctl2.setxy(4, 1);
     drawCruve(start, end, ctl1, ctl2);
 }
 
 
-void downturn(double y, double z, double degree) {
+void downturn(double x, double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
-    ctl1.setxy(0.5, 1);
-	ctl2.setxy(2.5, 0.5);
-    start.setxy(z, y);
-    end.setxy(3, -1);
+    ctl1.setxy(x, 1, -0.5);
+	ctl2.setxy(x, 0.5, -2.5);
+    start.setxy(x, y, z);
+    end.setxy(x, -1, -3);
+    drawCruve(start, end, ctl1, ctl2);
+
+    ctl1.setxy(-x, 1, -0.5);
+	ctl2.setxy(-x, 0.5, -2.5);
+    start.setxy(-x, y, z);
+    end.setxy(-x, -1, -3);
     drawCruve(start, end, ctl1, ctl2);
 }
