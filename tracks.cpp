@@ -52,10 +52,7 @@ Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {
     return p;
 }
 
-void drawLevelLine(Point p) {
 
-
-}
 
 void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
     glColor3f(1.0, 0.0, 0.0); 
@@ -63,13 +60,9 @@ void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
     Point p_current = start; // set as begin
     for (double t = 0.0; t <= 1.0; t += 0.05)
     {
-        //if (t == 0.5) printf("0.5!");
-        //printf("%f\n", t);
         Point P = setBezier(start, ctl_1, ctl_2, end, t);
         setline(p_current, P);  // draw small cruve segment
-        if ((int)(t * 100) % 10 == 0 && t != 1 && t != 0 || t == 0.5) {
-            //if ((int)(0.5 * 100) % 10 == 0) printf("ok\n");
-            //printf("value is %f\n", t);
+        if ((int)(t * 100) % 10 == 0 && t != 1 && t != 0) {
             Point opposite;
             opposite.set(-1 * p_current.x, p_current.y, p_current.z);
             setline(p_current, opposite);
@@ -88,15 +81,24 @@ void upturn(double y, double z, double degree) {
 
 void downturn(double x, double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
-    ctl1.set(x, 1, -0.5);
-	ctl2.set(x, 0.5, -2.5);
+    ctl1.set(x, 0, -1.5);
+	ctl2.set(x, -0.5, -3.5);
     start.set(x, y, z);
-    end.set(x, -1, -3);
+    end.set(x, -2, -4);
     drawCruve(start, end, ctl1, ctl2);
 
-    ctl1.set(-x, 1, -0.5);
-	ctl2.set(-x, 0.5, -2.5);
+    ctl1.set(-x, 0, -1.5);
+	ctl2.set(-x, -0.5, -3.5);
     start.set(-x, y, z);
-    end.set(-x, -1, -3);
+    end.set(-x, -2, -4);
     drawCruve(start, end, ctl1, ctl2);
+}
+
+
+
+void drawTracks() {
+    levelSection(100);
+    glTranslated(0, 0, segLength * 100);
+    downturn(segLength / 2, 0, 0, 30);
+
 }

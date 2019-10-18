@@ -37,16 +37,12 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	7.0, 3.0, -1.0, 
-				0.0, 0.0, 0.0, 
+	gluLookAt(	7.0, 3.0, -500.0, 
+				0.0, 0.0, -500.0, 
 				0.0, 1.0, 0.0);
-	
-
-	//levelSection(100);
 
 	drawThreeAxises();
-
-	downturn(segLength / 2, 1, 1, 30);
+	drawTracks();
 
 	glutSwapBuffers();
 }
@@ -76,7 +72,7 @@ int main(int argc, char *argv[])
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(600, 480);  // define size of the window
 	glutInitWindowPosition(100, 100);  // define position of the window
-	glutCreateWindow("Hello teapot");
+	glutCreateWindow("Roller Coaster");
 
 	init_lighting();
 
