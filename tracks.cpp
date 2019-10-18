@@ -52,14 +52,31 @@ Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {
     return p;
 }
 
-void drawCruve(Point begin, Point end, Point ctl_1, Point ctl_2) {
-    glColor3f(0.0, 0.0, 1.0); 
+void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
+    glColor3f(1.0, 0.0, 0.0); 
 
-    Point p_current = begin; // set as begin
+    Point p_current = start; // set as begin
     for (double t = 0.0; t <= 1.0; t += 0.05)
     {
-        Point P = setBezier(begin, ctl_1, ctl_2, end, t);
+        Point P = setBezier(start, ctl_1, ctl_2, end, t);
         setline(p_current, P);  // draw small segment
         p_current = P;
     }
+}
+
+void upturn(double y, double z, double degree) {
+    Point start, ctl1, ctl2, end;
+    ctl1.setxy(2, -2);
+	ctl2.setxy(4, 1);
+    drawCruve(start, end, ctl1, ctl2);
+}
+
+
+void downturn(double y, double z, double degree) {
+    Point start, ctl1, ctl2, end;
+    ctl1.setxy(0.5, 1);
+	ctl2.setxy(2.5, 0.5);
+    start.setxy(z, y);
+    end.setxy(3, -1);
+    drawCruve(start, end, ctl1, ctl2);
 }
