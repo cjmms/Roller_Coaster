@@ -33,8 +33,11 @@ void levelSection(int length) {
 
 void setline(Point p1, Point p2) {
     glBegin(GL_LINES);
-    glVertex2f(p1.x,p1.y);
-    glVertex2f(p2.x, p2.y);
+    glVertex3f(segLength / 2, p1.y, -p1.x);
+    glVertex3f(segLength / 2, p2.y, -p2.x);
+
+    glVertex3f(-segLength / 2, p1.y, -p1.x);
+    glVertex3f(-segLength / 2, p2.y, -p2.x);
     glEnd();
 }
 
@@ -49,16 +52,14 @@ Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {
     return p;
 }
 
-
-
 void drawCruve(Point begin, Point end, Point ctl_1, Point ctl_2) {
-    glColor3f(0.0, 0.0, 1.0); // 设定贝塞尔曲线的颜色
+    glColor3f(0.0, 0.0, 1.0); 
 
-    Point p_current = begin; //设为起点
+    Point p_current = begin; // set as begin
     for (double t = 0.0; t <= 1.0; t += 0.05)
     {
         Point P = setBezier(begin, ctl_1, ctl_2, end, t);
-        setline(p_current, P);
+        setline(p_current, P);  // draw small segment
         p_current = P;
     }
 }

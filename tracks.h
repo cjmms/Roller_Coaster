@@ -24,9 +24,8 @@ public:
     }
 };
 
-
-void levelSection(int);
-
+// draw a level line segment
+void levelSection(int length);
 
 // draw a segment between p1 and p2
 void setline(Point p1, Point p2);
