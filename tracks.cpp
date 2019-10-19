@@ -162,4 +162,12 @@ void drawTracks() {
     //         (
     glTranslated(0, sin(-30 * M_PI / 180.0) * 50 * segLength, cos(-30 * M_PI / 180.0) * 60 * -segLength   + 9);
     upturn(segLength / 2, 0, 0, -30);
+
+    //             ）
+    //          ）
+    //       ）
+    //    )
+    // )
+    glTranslated(0, sin(-30 * M_PI / 180.0) * 10 * segLength + 1.3, cos(-30 * M_PI / 180.0) * 10 * -segLength + 1.8);
+    upturn(segLength / 2, 0, 0, 30);
 }
