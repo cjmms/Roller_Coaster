@@ -37,9 +37,13 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	50.0, 10.0, -530.0, 
-				0.0, -3.0, -530.0, 
+	gluLookAt(	200.0, -20.0, -750.0, 
+				0.0, -60.0, -750.0, 
 				0.0, 1.0, 0.0);
+	// gluLookAt(	35.0, 5.0, 0.0, 
+	//  			0.0, 0.0, 0.0, 
+	//  			0.0, 1.0, 0.0);
+
 
 	drawThreeAxises();
 	drawTracks();
@@ -48,7 +52,7 @@ void draw() {
 }
 
 
-void init_lighting() {
+void init() {
 	glEnable(GL_DEPTH_TEST);
 	// glEnable(GL_LIGHTING);
 	// glEnable(GL_NORMALIZE);
@@ -62,7 +66,7 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
-	gluPerspective(60.0, ratio, 1.0, 100.0);  // specify a viewing frustum
+	gluPerspective(60.0, ratio, 1.0, 1000.0);  // specify a viewing frustum
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -74,7 +78,7 @@ int main(int argc, char *argv[])
 	glutInitWindowPosition(100, 100);  // define position of the window
 	glutCreateWindow("Roller Coaster");
 
-	init_lighting();
+	init();
 
 	glutReshapeFunc(changeSize);
 	glutDisplayFunc(draw);  // display callback

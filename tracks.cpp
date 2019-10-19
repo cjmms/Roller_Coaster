@@ -84,14 +84,6 @@ void drawCruve(Point start, Point end, Point ctl_1, Point ctl_2) {
 }
 
 
-void upturn(double y, double z, double degree) {
-    Point start, ctl1, ctl2, end;
-    // ctl1.setxy(2, -2);
-	// ctl2.setxy(4, 1);
-    drawCruve(start, end, ctl1, ctl2);
-}
-
-
 Point findEndPoint(Point start, double degree, double length) {
     Point end;
     end.x = start.x;
@@ -101,6 +93,28 @@ Point findEndPoint(Point start, double degree, double length) {
 }
 
 
+void upturn(double x, double y, double z, double degree) {
+    Point start, ctl1, ctl2, end;
+
+    start.set(x, y, z);
+    end = findEndPoint(start, degree, 10 * segLength);
+    ctl1.set(x, end.y / 4 - 5, end.z / 5 );
+    ctl2.set(x, end.y * 0.75 - 2, end.z * 0.75);
+    drawCruve(start, end, ctl1, ctl2);
+
+    // draw another curve
+    ctl1.x *= -1;
+    ctl2.x *= -1;
+    start.x *= -1;
+    end.x *= -1;
+    drawCruve(start, end, ctl1, ctl2);
+}
+
+// (
+//   (
+//     (
+//       (
+//         (
 void downturn(double x, double y, double z, double degree) {
     Point start, ctl1, ctl2, end;
 
@@ -121,12 +135,31 @@ void downturn(double x, double y, double z, double degree) {
 
 
 void drawTracks() {
+    // ------------------
     levelSection(100, 0);
 
+    //  )
+    //    )
+    //      )
+    //        )
+    //          )
     glTranslated(0, 0, -segLength * 100);
     downturn(segLength / 2, 0, 0, -30);
 
     // hardcode as -30 degree
+    //  |
+    //     |
+    //        |
+    //           |
+    //              |
     glTranslated(0, sin(-30 * M_PI / 180.0) * 10 * segLength + 1.3, cos(-30 * M_PI / 180.0) * 10 * -segLength + 1.8);
-    levelSection(100, -30);
+    levelSection(50, -30);
+
+    // (
+    //   (
+    //     (
+    //       (
+    //         (
+    glTranslated(0, sin(-30 * M_PI / 180.0) * 50 * segLength, cos(-30 * M_PI / 180.0) * 60 * -segLength   + 9);
+    upturn(segLength / 2, 0, 0, -30);
 }
