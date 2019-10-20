@@ -9,7 +9,10 @@
 #endif
 
 #include "tracks.h"
+#include "camera.h"
+//#include "tools.h"
 
+//double z_dis = 0.0;
 
 // x axis is red, y axis is green, z axis is blue
 void drawThreeAxises () {
@@ -37,13 +40,14 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	200.0, -30.0, -1100.0, 
-				0.0, -70.0, -1100.0, 
-				0.0, 1.0, 0.0);
-	// gluLookAt(	35.0, 5.0, 0.0, 
-	//  			0.0, 0.0, 0.0, 
-	//  			0.0, 1.0, 0.0);
+	// gluLookAt(	200.0, -30.0, -1100.0, 
+	// 			0.0, -70.0, -1100.0, 
+	// 			0.0, 1.0, 0.0);
 
+	// gluLookAt(	0.0, 2.0, 0.0 - z_dis, 
+	//  			0.0, 1.0, -5.0 - z_dis, 
+	//  			0.0, 1.0, 0.0);
+	camera();
 
 	drawThreeAxises();
 	drawTracks();
@@ -66,8 +70,13 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
-	gluPerspective(60.0, ratio, 1.0, 1000.0);  // specify a viewing frustum
+	gluPerspective(60.0, ratio, 1.0, 80.0);  // specify a viewing frustum
 	glMatrixMode(GL_MODELVIEW);
+}
+
+void idle() {
+	//if(z_dis <= segLength * 100) z_dis += 2; 
+	draw();
 }
 
 int main(int argc, char *argv[])
@@ -80,6 +89,7 @@ int main(int argc, char *argv[])
 
 	init();
 
+	glutIdleFunc(idle);
 	glutReshapeFunc(changeSize);
 	glutDisplayFunc(draw);  // display callback
 	glutMainLoop();  // enter event processing loop
