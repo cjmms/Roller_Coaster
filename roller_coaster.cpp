@@ -37,8 +37,8 @@ void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glLoadIdentity();
-	gluLookAt(	200.0, -20.0, -750.0, 
-				0.0, -60.0, -750.0, 
+	gluLookAt(	200.0, -30.0, -800.0, 
+				0.0, -70.0, -800.0, 
 				0.0, 1.0, 0.0);
 	// gluLookAt(	35.0, 5.0, 0.0, 
 	//  			0.0, 0.0, 0.0, 
