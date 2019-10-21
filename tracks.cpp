@@ -136,14 +136,15 @@ void downturn(double x, double y, double z, double degree) {
 
 void drawTracks() {
     // ------------------
-    levelSection(100, 0);
+    //glTranslated(0, 0, -segLength * 100);
+    levelSection(200, 0);
 
     //  )
     //    )
     //      )
     //        )
     //          )
-    glTranslated(0, 0, -segLength * 100);
+    glTranslated(0, 0, -segLength * 200);
     downturn(segLength / 2, 0, 0, -30);
 
     // hardcode as -30 degree
@@ -189,6 +190,6 @@ void drawTracks() {
     downturn(segLength / 2, 0, 0, 30);
 
     // --------
-    glTranslated(0, sin(30 * M_PI / 180.0) * 10 * segLength, cos(30 * M_PI / 180.0) * 10 * -segLength + 1.8);
+    glTranslated(0, sin(30 * M_PI / 180.0) * 10 * segLength + 1, cos(30 * M_PI / 180.0) * 10 * -segLength );
     levelSection(100, 0);
 }

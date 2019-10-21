@@ -3,7 +3,7 @@
 
 
 double eye_y = 0.0;
-double eye_z = 0.0;
+double eye_z = -500.0;
 
 double z_slope = 0.0;
 double y_slope = 0.0;
@@ -11,13 +11,15 @@ double t_slope_1 = 0;
 double t_slope_2 = 0.0;
 double t_up_1 = 0.0;
 double t_up_2 = 0.0;
+double t_down_1 = 0.0;
+double t_down_2 = 0.0;
 
 int DOWN = 1;
 int UP = -1;
 
 Point start, ctl1, ctl2, end;
 
-double t = 0.0;
+
 
 void cameraAperture() {
 
@@ -48,13 +50,13 @@ void findCtlPoints(double degree, int turn, int length) {
 
 void camera() {
     // level section length 100
-    if (eye_z > -5 * 100) {
+    if (eye_z > -10 * 100) {
         cameraSpeed(10);
     }
-    else if (!areSame(1, t)) {
-        if (t == 0) findCtlPoints(-30, DOWN, 10);
+    else if (!areSame(1, t_down_1)) {
+        if (t_down_1 == 0) findCtlPoints(-30, DOWN, 10);
 
-        Point P = setBezier(start, ctl1, ctl2, end, t+=0.025);
+        Point P = setBezier(start, ctl1, ctl2, end, t_down_1+=0.025);
         eye_z = P.z;
         eye_y = P.y;
         //printf("turn t: %f, y: %f, z: %f\n", t, eye_y, eye_z);
@@ -76,8 +78,6 @@ void camera() {
 
         // printf("ctl1_y: %f, ctl1_z: %f\n", ctl1.y, ctl1.z);
         // printf("ctl2_y: %f, ctl2_z: %f\n\n", ctl2.y, ctl2.z);
-
-
         Point P = setBezier(start, ctl1, ctl2, end, t_up_1+=0.025);
         eye_z = P.z;
         eye_y = P.y;
@@ -93,15 +93,30 @@ void camera() {
             z_slope = eye_z;
             y_slope = eye_y;
         }
-        double degree = 26.5;
+        double degree = 27;
         eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope_2;
         eye_y = y_slope + 50 * segLength * sin(degree * M_PI / 180.0) * t_slope_2;
 
         //printf("turn t_slope: %f, y: %f, z: %f\n", t_slope, eye_y, eye_z);
         t_slope_2 += 0.0025;
+    } else if (!areSame(1, t_down_2)) {
+        if (t_down_2 == 0) findCtlPoints(30, DOWN, 10);
+
+        Point P = setBezier(start, ctl1, ctl2, end, t_down_2+=0.025);
+        eye_z = P.z;
+        eye_y = P.y; 
+    } else {
+        eye_y = 0.0;
+        eye_z = -500.0;
+        z_slope = 0.0;
+        y_slope = 0.0;
+        t_slope_1 = 0;
+        t_slope_2 = 0.0;
+        t_up_1 = 0.0;
+        t_up_2 = 0.0;
+        t_down_1 = 0.0;
+        t_down_2 = 0.0;
     }
-
-
     // downturn
 
 
