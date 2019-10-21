@@ -1,18 +1,13 @@
 #include "camera.h"
 
-//double z_dis = 0.0;
 
-// double eye_y = 2.0;
-// double eye_z = 0.0;
-
-// double look_y = 1.0;
-// double look_z = -5.0;
 
 double eye_y = 0.0;
 double eye_z = 0.0;
 
-// double look_y = 0.0;
-// double look_z = 0.0;
+double z_slope = 0.0;
+double y_slope = 0.0;
+double t_slope = 0;
 
 Point start, ctl1, ctl2, end;
 
@@ -49,10 +44,21 @@ void camera() {
     else if (!areSame(1, t)) {
         if (t == 0) findCtlPoints();
 
-        Point P = setBezier(start, ctl1, ctl2, end, t+=0.05);
+        Point P = setBezier(start, ctl1, ctl2, end, t+=0.025);
         eye_z = P.z;
         eye_y = P.y;
         printf("turn t: %f, y: %f, z: %f\n", t, eye_y, eye_z);
+    } else if (!areSame(1.1, t_slope)) {
+        if (t_slope == 0) {
+            z_slope = eye_z;
+            y_slope = eye_y;
+        }
+        double degree = 26.5;
+        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope;
+        eye_y = y_slope - 50 * segLength * sin(degree * M_PI / 180.0) * t_slope;
+
+        printf("turn t_slope: %f, y: %f, z: %f\n", t_slope, eye_y, eye_z);
+        t_slope += 0.0025;
     }
 
 
