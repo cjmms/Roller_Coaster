@@ -70,6 +70,8 @@ void idle() {
 	draw();
 }
 
+
+
 int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);  // initialize the library
