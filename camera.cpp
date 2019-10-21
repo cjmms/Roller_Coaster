@@ -60,7 +60,7 @@ void camera() {
     }
     else if (!areSame(1, t_down_1)) {
         if (t_down_1 == 0) findCtlPoints(-30, DOWN, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_down_1 += 0.025 * getSpeed(speed));
+        Point P = setBezier(start, ctl1, ctl2, end, t_down_1 += 0.025 );
         eye_z = P.z;
         eye_y = P.y;
     } 
@@ -76,13 +76,13 @@ void camera() {
     } 
     else if (!areSame(1, t_up_1)) {
         if (t_up_1 == 0) findCtlPoints(-30, UP, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_up_1 += 0.025 * getSpeed(speed));
+        Point P = setBezier(start, ctl1, ctl2, end, t_up_1 += 0.025 );
         eye_z = P.z;
         eye_y = P.y;
     } 
     else if (!areSame(1, t_up_2)) {
         if (t_up_2 == 0) findCtlPoints(30, UP, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_up_2 += 0.025 * getSpeed(speed));
+        Point P = setBezier(start, ctl1, ctl2, end, t_up_2 += 0.025 );
         eye_z = P.z;
         eye_y = P.y;
     } 
@@ -99,7 +99,7 @@ void camera() {
     else if (!areSame(1, t_down_2)) {
         if (t_down_2 == 0) findCtlPoints(30, DOWN, 10);
 
-        Point P = setBezier(start, ctl1, ctl2, end, t_down_2 += 0.025 * getSpeed(speed));
+        Point P = setBezier(start, ctl1, ctl2, end, t_down_2 += 0.025 );
         eye_z = P.z;
         eye_y = P.y; 
     } 
