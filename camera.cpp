@@ -7,8 +7,10 @@ double eye_z = 0.0;
 
 double z_slope = 0.0;
 double y_slope = 0.0;
-double t_slope = 0;
-double t_up = 0.0;
+double t_slope_1 = 0;
+double t_slope_2 = 0.0;
+double t_up_1 = 0.0;
+double t_up_2 = 0.0;
 
 int DOWN = 1;
 int UP = -1;
@@ -56,31 +58,36 @@ void camera() {
         eye_z = P.z;
         eye_y = P.y;
         //printf("turn t: %f, y: %f, z: %f\n", t, eye_y, eye_z);
-    } else if (!areSame(1.1, t_slope)) {
-        if (t_slope == 0) {
+    } else if (!areSame(1.1, t_slope_1)) {
+        if (t_slope_1 == 0) {
             z_slope = eye_z;
             y_slope = eye_y;
         }
         double degree = 26.5;
-        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope;
-        eye_y = y_slope - 50 * segLength * sin(degree * M_PI / 180.0) * t_slope;
+        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope_1;
+        eye_y = y_slope - 50 * segLength * sin(degree * M_PI / 180.0) * t_slope_1;
 
         //printf("turn t_slope: %f, y: %f, z: %f\n", t_slope, eye_y, eye_z);
-        t_slope += 0.0025;
-    } else if (!areSame(1, t_up)) {
-        if (t_up == 0) findCtlPoints(-30, UP, 10);
-        printf("start_y: %f, start_z: %f\n", start.y, start.z);
-        printf("end_y: %f, end_z: %f\n", end.y, end.z);
+        t_slope_1 += 0.0025;
+    } else if (!areSame(1, t_up_1)) {
+        if (t_up_1 == 0) findCtlPoints(-30, UP, 10);
+        // printf("start_y: %f, start_z: %f\n", start.y, start.z);
+        // printf("end_y: %f, end_z: %f\n", end.y, end.z);
 
-        printf("ctl1_y: %f, ctl1_z: %f\n", ctl1.y, ctl1.z);
-        printf("ctl2_y: %f, ctl2_z: %f\n\n", ctl2.y, ctl2.z);
+        // printf("ctl1_y: %f, ctl1_z: %f\n", ctl1.y, ctl1.z);
+        // printf("ctl2_y: %f, ctl2_z: %f\n\n", ctl2.y, ctl2.z);
 
 
-        Point P = setBezier(start, ctl1, ctl2, end, t_up+=0.025);
+        Point P = setBezier(start, ctl1, ctl2, end, t_up_1+=0.025);
         eye_z = P.z;
         eye_y = P.y;
 
         //printf("turn t_slope: %f, y: %f, z: %f\n", t_up, eye_y, eye_z);
+    } else if (!areSame(1, t_up_2)) {
+        if (t_up_2 == 0) findCtlPoints(30, UP, 10);
+        Point P = setBezier(start, ctl1, ctl2, end, t_up_2+=0.025);
+        eye_z = P.z;
+        eye_y = P.y;
     }
 
 
