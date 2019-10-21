@@ -88,6 +88,17 @@ void camera() {
         Point P = setBezier(start, ctl1, ctl2, end, t_up_2+=0.025);
         eye_z = P.z;
         eye_y = P.y;
+    } else if (!areSame(1.1, t_slope_2)) {
+        if (t_slope_2 == 0) {
+            z_slope = eye_z;
+            y_slope = eye_y;
+        }
+        double degree = 26.5;
+        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope_2;
+        eye_y = y_slope + 50 * segLength * sin(degree * M_PI / 180.0) * t_slope_2;
+
+        //printf("turn t_slope: %f, y: %f, z: %f\n", t_slope, eye_y, eye_z);
+        t_slope_2 += 0.0025;
     }
 
 
