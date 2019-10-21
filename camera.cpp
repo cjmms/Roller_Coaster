@@ -17,7 +17,13 @@ double t_down_2 = 0.0;
 int DOWN = 1;
 int UP = -1;
 
+double speed = 15;
+
 Point start, ctl1, ctl2, end;
+
+void setSpeed(double input) {
+    speed = input;
+}
 
 double getSpeed(double speed) {
     if (speed == 5) return 0.5;
@@ -48,7 +54,6 @@ void findCtlPoints(double degree, int turn, int length) {
 
 
 void camera() {
-    double speed = 15;
     // level section length 100
     if (eye_z > -segLength * 200) {
         cameraSpeed(speed);

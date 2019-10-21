@@ -2,8 +2,8 @@
 
 
 void levelSection(int length, double degree) {
-    glColor3f(1.0, 0.0, 0.0); // Red
 
+    glColor3f(1.0, 0.0, 0.0); // Red
     glBegin(GL_LINES);
     // starting horizontal line
     glVertex3f(segLength / 2, 0, 0); 
@@ -12,6 +12,7 @@ void levelSection(int length, double degree) {
     // ending horizontal line
     glVertex3f(segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength); 
     glVertex3f(-segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
+
 
     // left track
 	glVertex3f(segLength / 2, 0, 0);

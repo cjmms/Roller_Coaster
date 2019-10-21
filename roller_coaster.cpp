@@ -10,6 +10,12 @@
 
 //#include "tracks.h"
 #include "camera.h"
+#include <stdlib.h>
+
+#define SPEED_5 3
+#define SPEED_10 4
+#define SPEED_15 5
+#define EXIT 6
 
 
 // x axis is red, y axis is green, z axis is blue
@@ -34,14 +40,14 @@ void drawThreeAxises () {
     glEnd();
 }
 
+
+
 void draw() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	glLoadIdentity();
 
 	camera();
 
-	drawThreeAxises();
 	drawTracks();
 
 	glutSwapBuffers();
@@ -54,6 +60,7 @@ void init() {
 	// glEnable(GL_NORMALIZE);
 	// glEnable(GL_COLOR_MATERIAL);
 	// glEnable(GL_LIGHT0);
+	//glClearColor(0.35f, 0.88f, 0.97f, 1.0f);
 }
 
 void changeSize(int w, int h) {
@@ -70,6 +77,36 @@ void idle() {
 	draw();
 }
 
+void processMenuEvents(int option)
+{
+	switch (option) {
+	case SPEED_5:
+		setSpeed(5);
+		break;
+	case SPEED_10:
+		setSpeed(10);
+		break;
+	case SPEED_15:
+		setSpeed(15);
+		break;
+	case EXIT:
+		exit(0);
+		break;
+	}
+}
+
+void createMenu() {
+	int menu = glutCreateMenu(processMenuEvents);
+
+	// add entries
+	glutAddMenuEntry("Speed 5", SPEED_5);
+	glutAddMenuEntry("Speed 10", SPEED_10);
+	glutAddMenuEntry("Speed 15", SPEED_15);
+	glutAddMenuEntry("EXIT", EXIT);
+
+	// menu pops up when right button is pressed
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
 
 
 int main(int argc, char *argv[])
@@ -82,6 +119,8 @@ int main(int argc, char *argv[])
 
 	init();
 
+	createMenu();
+	
 	glutIdleFunc(idle);
 	glutReshapeFunc(changeSize);
 	glutDisplayFunc(draw);  // display callback

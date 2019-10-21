@@ -18,3 +18,5 @@ void cameraSpeed(double speed);
 void camera();
 
 double getSpeed(int speed);
+
+void setSpeed(double input);
