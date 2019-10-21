@@ -8,9 +8,13 @@
 
 #include "tracks.h"
 
+
+
 //#include "tools.h"
 
 
 void cameraAperature();
 void cameraSpeed(double speed);
 void camera();
+
+double getSpeed(int speed);
