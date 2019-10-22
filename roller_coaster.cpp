@@ -16,6 +16,11 @@
 #define SPEED_10 4
 #define SPEED_15 5
 #define EXIT 6
+#define FOV_45 7
+#define FOV_60 8
+#define FOV_75 9
+
+double fov_degree = 60;
 
 
 // x axis is red, y axis is green, z axis is blue
@@ -80,6 +85,7 @@ void init() {
 	// glEnable(GL_COLOR_MATERIAL);
 	// glEnable(GL_LIGHT0);
 	//glClearColor(0.35f, 0.88f, 0.97f, 1.0f);
+	glClearColor(0.78f, 0.87f, 1.00f, 1.0f);
 }
 
 void changeSize(int w, int h) {
@@ -88,7 +94,7 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	glViewport(0, 0, w, h);
-	gluPerspective(60.0, ratio, 1.0, 80.0);  // specify a viewing frustum
+	gluPerspective(fov_degree, ratio, 1.0, 40.0);  // specify a viewing frustum
 	glMatrixMode(GL_MODELVIEW);
 }
 
@@ -108,6 +114,15 @@ void processMenuEvents(int option)
 	case SPEED_15:
 		setSpeed(15);
 		break;
+	case FOV_45:
+		fov_degree = 45;
+		break;
+	case FOV_60:
+		fov_degree = 60;
+		break;
+	case FOV_75:
+		fov_degree = 75;
+		break;
 	case EXIT:
 		exit(0);
 		break;
@@ -121,6 +136,9 @@ void createMenu() {
 	glutAddMenuEntry("Speed 5", SPEED_5);
 	glutAddMenuEntry("Speed 10", SPEED_10);
 	glutAddMenuEntry("Speed 15", SPEED_15);
+	glutAddMenuEntry("fov 45", FOV_45);
+	glutAddMenuEntry("fov 60", FOV_60);
+	glutAddMenuEntry("fov 75", FOV_75);
 	glutAddMenuEntry("EXIT", EXIT);
 
 	// menu pops up when right button is pressed
