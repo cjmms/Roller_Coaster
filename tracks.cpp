@@ -1,9 +1,17 @@
 #include "tracks.h"
 
 
+GLUquadricObj *quadratic = gluNewQuadric();
+
 void levelSection(int length, double degree) {
 
     glColor3f(1.0, 0.0, 0.0); // Red
+
+    // Point a, b;
+    // a.set(segLength / 2, 0, 0);
+    // b.set(segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
+    // drawCylinder(a, b);
+
     glBegin(GL_LINES);
     // starting horizontal line
     glVertex3f(segLength / 2, 0, 0); 
@@ -12,7 +20,7 @@ void levelSection(int length, double degree) {
     // ending horizontal line
     glVertex3f(segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength); 
     glVertex3f(-segLength / 2, sin(degree * M_PI / 180.0) * length * segLength, length * -segLength);
-
+    
 
     // left track
 	glVertex3f(segLength / 2, 0, 0);
@@ -39,6 +47,23 @@ void setline(Point p1, Point p2) {
     glVertex3f(p2.x, p2.y, p2.z);
 
     glEnd();
+    //drawCylinder(p1, p2);
+}
+
+void drawCylinder(Point p1, Point p2) {
+    if (p1.x == p2.x) {
+        glPushMatrix();
+
+        // degree between p1.y and p2.y
+        double degree = atan((p1.y - p2.y) / (p1.z - p2.z)) * 180 / M_PI;
+        if (p1.y < p2.y) degree *= -1;
+        printf("degree: %f\n", degree);
+        glRotatef(degree, 1.0, 0.0, 0.0);
+	    glTranslatef(p2.x, p2.y, p2.z);
+        
+        gluCylinder(quadratic, 0.1f, 0.1f, p2.z - p1.z, 32, 32);	
+	    glPopMatrix();
+    }
 }
 
 Point setBezier(Point p1, Point p2, Point p3, Point p4, double t) {

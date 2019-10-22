@@ -50,6 +50,25 @@ void draw() {
 
 	drawTracks();
 
+	// gluLookAt(	0, 2, -5,
+	// 			0, 0, 0,
+	// 			0, 1, 0 );
+
+	// drawThreeAxises();
+
+	// glPushMatrix();
+	// glBegin(GL_LINES);
+	// glColor3f(1.0, 0.0, 0.0);
+	// glVertex3f(1.0, 1.0, 1.0);
+    // glVertex3f(1.0, 2.0, 3.0);
+	// glEnd();	
+	// glPopMatrix();
+
+	// Point a, b;
+	// a.set(1.0, 1.0, 1.0);
+	// b.set(1.0, 2.0, 3.0);
+	// drawCylinder(a, b);
+
 	glutSwapBuffers();
 }
 

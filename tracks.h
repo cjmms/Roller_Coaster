@@ -56,3 +56,5 @@ void addLevelLineForCurve(Point p, double t);
 
 // compare two double values
 bool areSame(double a, double b);
+
+void drawCylinder(Point p1, Point p2);
