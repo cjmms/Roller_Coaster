@@ -88,6 +88,7 @@ void init() {
 	glClearColor(0.78f, 0.87f, 1.00f, 1.0f);
 }
 
+
 void changeSize(int w, int h) {
 	float ratio = (float)w/ (float)h;
 
@@ -98,9 +99,11 @@ void changeSize(int w, int h) {
 	glMatrixMode(GL_MODELVIEW);
 }
 
+
 void idle() {
 	draw();
 }
+
 
 void processMenuEvents(int option)
 {
@@ -128,6 +131,7 @@ void processMenuEvents(int option)
 		break;
 	}
 }
+
 
 void createMenu() {
 	int menu = glutCreateMenu(processMenuEvents);
