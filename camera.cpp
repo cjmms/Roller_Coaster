@@ -1,12 +1,11 @@
 #include "camera.h"
 
-
-
 double eye_y = 0.0;
 double eye_z = -500.0;
 
 double z_slope = 0.0;
 double y_slope = 0.0;
+
 double t_slope_1 = 0;
 double t_slope_2 = 0.0;
 double t_up_1 = 0.0;
@@ -52,57 +51,51 @@ void findCtlPoints(double degree, int turn, int length) {
     end.y += start.y;
 }
 
+double curveMove(double degree, int turn, double t) {
+    // hardcode as 10, which is length of path
+    if (t == 0) findCtlPoints(degree, turn, 10);
+    Point P = setBezier(start, ctl1, ctl2, end, t  );
+    eye_z = P.z;
+    eye_y = P.y;
+    return t += 0.025;
+}
+
+double slopeMove(double t, double degree) {
+    if (t == 0) {
+            z_slope = eye_z;
+            y_slope = eye_y;
+        }
+
+        // 50 * segLengt is length of slope
+        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t;
+        eye_y = y_slope + 50 * segLength * sin(degree * M_PI / 180.0) * t;
+        return t + 0.0025 * getSpeed(speed);
+}
+
 
 void camera() {
     // level section length 100
     if (eye_z > -segLength * 200) {
         cameraSpeed(speed);
     }
-    else if (!areSame(1, t_down_1)) {
-        if (t_down_1 == 0) findCtlPoints(-30, DOWN, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_down_1 += 0.025 );
-        eye_z = P.z;
-        eye_y = P.y;
+    else if (!areSame(1, t_down_1 )) {
+        t_down_1 = curveMove(-30, DOWN, t_down_1);
     } 
     else if (!areSame(1.1, t_slope_1)) {
-        if (t_slope_1 == 0) {
-            z_slope = eye_z;
-            y_slope = eye_y;
-        }
-        double degree = 26.5;
-        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope_1 ;
-        eye_y = y_slope - 50 * segLength * sin(degree * M_PI / 180.0) * t_slope_1 ;
-        t_slope_1 += 0.0025 * getSpeed(speed);
+        t_slope_1 = slopeMove(t_slope_1, -26.5);
     } 
     else if (!areSame(1, t_up_1)) {
-        if (t_up_1 == 0) findCtlPoints(-30, UP, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_up_1 += 0.025 );
-        eye_z = P.z;
-        eye_y = P.y;
+        t_up_1 = curveMove(-30, UP, t_up_1);
     } 
     else if (!areSame(1, t_up_2)) {
-        if (t_up_2 == 0) findCtlPoints(30, UP, 10);
-        Point P = setBezier(start, ctl1, ctl2, end, t_up_2 += 0.025 );
-        eye_z = P.z;
-        eye_y = P.y;
+        t_up_2 = curveMove(30, UP, t_up_2);
     } 
     else if (!areSame(1.1, t_slope_2)) {
-        if (t_slope_2 == 0) {
-            z_slope = eye_z;
-            y_slope = eye_y;
-        }
-        double degree = 26.9;
-        eye_z = z_slope - 50 * segLength * cos(degree * M_PI / 180.0) * t_slope_2 ;
-        eye_y = y_slope + 50 * segLength * sin(degree * M_PI / 180.0) * t_slope_2 ;
-        t_slope_2 += 0.0025 * getSpeed(speed);
-    } 
+        t_slope_2 = slopeMove(t_slope_2, 26.9);
+    }
     else if (!areSame(1, t_down_2)) {
-        if (t_down_2 == 0) findCtlPoints(30, DOWN, 10);
-
-        Point P = setBezier(start, ctl1, ctl2, end, t_down_2 += 0.025 );
-        eye_z = P.z;
-        eye_y = P.y; 
-    } 
+        t_down_2 = curveMove(30, DOWN, t_down_2);
+    }
     else {
         eye_y = 0.0;
         eye_z = -500.0;
